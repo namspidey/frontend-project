@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:3001"; // backend đang chạy ở cổng 3001
+const SOCKET_URL = "https://backend-project-xqjf.onrender.com"; // backend đang chạy ở cổng 3001
 
 let socket;
 
