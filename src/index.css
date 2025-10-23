@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.hover-bg-light:hover {
+  background-color: #f1f3f5;
+  transition: background-color 0.2s;
+}

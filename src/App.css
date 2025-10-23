@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+@supports (-webkit-touch-callout: none) {
+  input, textarea {
+    font-size: 16px !important; /* chống zoom khi focus */
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-input-bar {
+    margin-bottom: 70px; /* chừa thêm chỗ khi có bottom nav */
+  }
+}
+
