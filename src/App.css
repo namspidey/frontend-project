@@ -32,20 +32,95 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
 @supports (-webkit-touch-callout: none) {
-  input, textarea {
-    font-size: 16px !important; /* chống zoom khi focus */
+
+  input,
+  textarea {
+    font-size: 16px !important;
+    /* chống zoom khi focus */
   }
 }
 
 @media (max-width: 768px) {
   .chat-input-bar {
-    margin-bottom: 70px; /* chừa thêm chỗ khi có bottom nav */
+    margin-bottom: 70px;
+    /* chừa thêm chỗ khi có bottom nav */
   }
 }
 
+
+
+.btn-login {
+  background-image: linear-gradient(to right, #1A2980 0%, #26D0CE 51%, #1A2980 100%)
+}
+
+.btn-login {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+  border-color: #fff;
+}
+
+.btn-login:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Floating label style từ Uiverse.io */
+.inputGroup {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 1em 0;
+  position: relative;
+  width: 100%;
+}
+
+.inputGroup input {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.inputGroup label {
+  font-size: 100%;
+  position: absolute;
+  left: 0;
+  padding: 0.8em;
+  margin-left: 0.5em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: rgb(100, 100, 100);
+}
+
+/* Khi focus hoặc có nội dung, label di chuyển lên */
+.inputGroup :is(input:focus, input:valid) ~ label {
+  transform: translateY(-50%) scale(0.9);
+  margin-left: 1.3em;
+  padding: 0.4em;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+/* Màu border khi focus */
+.inputGroup :is(input:focus, input:valid) {
+  border-color: rgb(150, 150, 200);
+}
