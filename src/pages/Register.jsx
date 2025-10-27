@@ -19,17 +19,26 @@ export default function Register() {
   };
 
   const handleSendOtp = async () => {
-    try {
-      setLoading(true);
-      await sendOtpToEmail(form);
-      localStorage.setItem('registerInfo', JSON.stringify(form));
-      navigate('/verify-otp');
-    } catch (err) {
-      setMessage(err.message);
-    } finally {
-      setLoading(false);
+    if (Object.values(form).some((val) => !val.trim())) {
+      setMessage('Vui lòng nhập đủ thông tin');
+      return;
     }
-  };
+
+  try {
+    setLoading(true);
+    await sendOtpToEmail(form);
+    localStorage.setItem('registerInfo', JSON.stringify(form));
+    navigate('/verify-otp');
+  } catch (err) {
+    // ❌ Không in lỗi chi tiết ra người dùng
+    // ✅ Hiển thị thông báo chung
+    setMessage('Đã xảy ra lỗi. Vui lòng thử lại sau');
+    console.error('Lỗi khi gửi OTP:', err); // log nội bộ để debug
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="container mt-5" style={{ maxWidth: '400px' }}>

@@ -21,10 +21,14 @@ export default function VerifyOtp() {
       setLoading(true);
       await registerUser({ ...form, otp });
       localStorage.removeItem('registerInfo');
-      setMessage('Đăng ký thành công!');
-      navigate('/login');
+      setMessage('✅ Đăng ký thành công. Vui lòng đăng nhập lại');
+      
+      // ⏳ Chờ 5 giây rồi chuyển sang login
+      setTimeout(() => navigate('/login'), 5000);
     } catch (err) {
-      setMessage(err.message);
+      // Ẩn chi tiết lỗi, hiển thị thông báo chung
+      setMessage('Đã xảy ra lỗi. Vui lòng thử lại sau');
+      console.error('Lỗi xác minh OTP:', err);
     } finally {
       setLoading(false);
     }
@@ -33,11 +37,16 @@ export default function VerifyOtp() {
   return (
     <div className="container mt-5" style={{ maxWidth: '400px' }}>
       <div className="card p-4 shadow-sm">
-        <h3 className="mb-4 text-center">Xác minh OTP</h3>
+        <h3 className="mb-3 text-center">Xác minh OTP</h3>
+
+        <p className="text-muted small mb-4 text-center">
+          Hệ thống đã gửi mã OTP về email của bạn. 
+          Vui lòng nhập mã OTP đã gửi để hoàn thành đăng ký.
+        </p>
 
         <input
           type="text"
-          className="form-control mb-3"
+          className="form-control mb-3 text-center"
           placeholder="Nhập mã OTP"
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
@@ -51,7 +60,15 @@ export default function VerifyOtp() {
           {loading ? 'Đang xác minh...' : 'Xác minh & Đăng ký'}
         </button>
 
-        {message && <p className="text-danger small mt-3">{message}</p>}
+        {message && (
+          <p
+            className={`mt-3 small text-center ${
+              message.includes('thành công') ? 'text-success' : 'text-danger'
+            }`}
+          >
+            {message}
+          </p>
+        )}
       </div>
     </div>
   );
