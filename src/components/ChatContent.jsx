@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { IoSend } from "react-icons/io5";
+import { IoMdPhotos } from "react-icons/io";
 import { getMessages, sendMessage } from "../lib/api";
 import { getSocket } from "../lib/socket";
-import { IoMdPhotos } from "react-icons/io";
+import { Link } from "react-router-dom";
+
 export default function ChatContent({ selectedUser, currentUser, onMessageUpdate }) {
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState("");
@@ -12,7 +14,6 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
   // 🟢 Khi đổi người chat → load tin nhắn
   useEffect(() => {
     if (!selectedUser) return;
-
     const fetchMessages = async () => {
       try {
         const res = await getMessages(selectedUser.id);
@@ -27,31 +28,26 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
     fetchMessages();
   }, [selectedUser]);
 
-  // 🟢 Lắng nghe realtime tin nhắn mới (và cleanup listener cũ)
+  // 🟢 Lắng nghe realtime tin nhắn mới
   useEffect(() => {
     if (!selectedUser) return;
     const socket = getSocket();
 
     const handleMessage = (msg) => {
-      // Nếu tin nhắn thuộc cuộc trò chuyện hiện tại
       if (
         selectedUser &&
         (msg.sender._id === selectedUser.id || msg.receiver === selectedUser.id)
       ) {
         setMessages((prev) => [...prev, msg]);
       }
-      onMessageUpdate?.(); // luôn reload danh sách chat bên phải
+      onMessageUpdate?.();
     };
 
     socket?.on("messageReceived", handleMessage);
-
-    // 🧹 Cleanup: gỡ listener khi đổi người chat hoặc component unmount
-    return () => {
-      socket?.off("messageReceived", handleMessage);
-    };
+    return () => socket?.off("messageReceived", handleMessage);
   }, [selectedUser, onMessageUpdate]);
 
-  // 🟢 Khi có tin nhắn mới → scroll xuống cuối
+  // 🟢 Auto scroll khi có tin mới
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -92,15 +88,20 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
     <div className="d-flex flex-column h-100" style={{ position: "relative" }}>
       {/* Header */}
       <div className="d-flex align-items-center border-bottom p-3 bg-white flex-shrink-0">
-        <img
-          src={selectedUser.profilePic || "/default-avatar.jpg"}
-          alt="ava"
-          className="rounded-circle me-3"
-          style={{ width: 45, height: 45, objectFit: "cover" }}
-        />
-        <div>
-          <strong>{selectedUser.fullname}</strong>
-        </div>
+        <Link
+          to={`/profile/${selectedUser.username}`}
+          className="d-flex align-items-center text-decoration-none text-dark"
+        >
+          <img
+            src={selectedUser.profilePic || "/default-avatar.jpg"}
+            alt="ava"
+            className="rounded-circle me-3"
+            style={{ width: 45, height: 45, objectFit: "cover" }}
+          />
+          <div>
+            <strong>{selectedUser.fullname}</strong>
+          </div>
+        </Link>
       </div>
 
       {/* Chat body */}
@@ -110,7 +111,7 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
           background: "#f9f9f9",
           height: "calc(100vh - 140px)",
           overflowY: "auto",
-          paddingBottom: window.innerWidth < 768 ? "100px" : "20px", // ✅ chừa chỗ cho bottom nav mobile
+          paddingBottom: window.innerWidth < 768 ? "100px" : "20px",
         }}
       >
         {messages.map((msg, index) => {
@@ -119,12 +120,14 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
           return (
             <div
               key={index}
-              className={`d-flex mb-2 ${fromMe ? "justify-content-end" : "justify-content-start"
-                }`}
+              className={`d-flex mb-2 ${
+                fromMe ? "justify-content-end" : "justify-content-start"
+              }`}
             >
               <div
-                className={`px-3 py-2 rounded-3 ${fromMe ? "bg-primary text-white" : "bg-white border"
-                  }`}
+                className={`px-3 py-2 rounded-3 ${
+                  fromMe ? "bg-primary text-white" : "bg-white border"
+                }`}
                 style={{ maxWidth: "60%" }}
               >
                 {msg.image ? (
@@ -142,6 +145,7 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
         })}
         <div ref={messagesEndRef}></div>
       </div>
+
       {image && (
         <div className="p-2 border-top bg-white text-center">
           <img
@@ -163,6 +167,7 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
           </button>
         </div>
       )}
+
       {/* Input bar */}
       <form
         onSubmit={handleSend}
@@ -197,7 +202,6 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
           <IoSend size={20} />
         </button>
       </form>
-
     </div>
   );
 }

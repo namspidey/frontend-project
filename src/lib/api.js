@@ -255,3 +255,20 @@ export async function getUserById(userId) {
   if (!res.ok) throw new Error("Không lấy được thông tin user");
   return await res.json();
 }
+
+export async function uploadProfilePic(file) {
+  const token = localStorage.getItem("token");
+  const formData = new FormData();
+  formData.append("image", file);
+
+  const res = await fetch(`${BASE_URL}/user/upload-avatar`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!res.ok) throw new Error("Tải ảnh thất bại. Vui lòng thử lại");
+  return await res.json();
+}

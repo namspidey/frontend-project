@@ -156,6 +156,9 @@ export default function PostDetailModal({
               profilePic={post.user?.profilePic}
               username={post.user?.username}
             />
+            {post.caption && (
+    <p className="mt-2 mb-0 text-break">{post.caption}</p>
+  )}
           </div>
 
           {/* Comment list - scrollable */}
