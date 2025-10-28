@@ -82,7 +82,7 @@ export default function CreatePost({ onPostCreated }) {
                             accept="image/*"
                             multiple
                             onChange={handleImageChange}
-                            className="form-control mb-3"
+                            className="form-control mb-3 "
                         />
 
                         {previewUrls.length > 0 && (
@@ -103,9 +103,9 @@ export default function CreatePost({ onPostCreated }) {
                                 ))}
                             </div>
                         )}
-                        <div className="text-center"><button
+                        <div className="text-center "><button
                             type="submit"
-                            className="btn btn-primary w-30"
+                            className="btn btn-primary w-30 btn-gra"
 
                             disabled={loading}
                         >

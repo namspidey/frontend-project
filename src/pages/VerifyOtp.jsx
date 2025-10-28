@@ -53,7 +53,7 @@ export default function VerifyOtp() {
         />
 
         <button
-          className="btn btn-primary w-100"
+          className="btn-gra w-100"
           onClick={handleSubmit}
           disabled={loading}
         >

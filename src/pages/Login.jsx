@@ -47,7 +47,7 @@ export default function Login() {
 
       {error && <p className="text-danger small">{error}</p>}
 
-      <button className="w-100 btn-login" onClick={handleLogin}>
+      <button className="w-100 btn-gra" onClick={handleLogin}>
         Đăng nhập
       </button>
 

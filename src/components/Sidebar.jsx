@@ -27,7 +27,7 @@ export default function Sidebar({ user, onLogout }) {
               to={item.path}
               className={({ isActive }) =>
                 `btn w-100 text-start d-flex align-items-center gap-3 ${
-                  isActive ? "btn-primary text-white" : "btn-light"
+                  isActive ? "btn-grad-active text-white" : "btn-light"
                 }`
               }
               style={{
@@ -48,7 +48,7 @@ export default function Sidebar({ user, onLogout }) {
             to={`/profile/${user?.username}`}
             className={({ isActive }) =>
               `btn w-100 text-start d-flex align-items-center gap-3 ${
-                isActive ? "btn-primary text-white" : "btn-light"
+                isActive ? "btn-grad-active text-white" : "btn-light"
               }`
             }
             style={{

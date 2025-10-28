@@ -56,11 +56,11 @@
 
 
 
-.btn-login {
+.btn-gra {
   background-image: linear-gradient(to right, #1A2980 0%, #26D0CE 51%, #1A2980 100%)
 }
 
-.btn-login {
+.btn-gra {
   margin: 10px;
   padding: 15px 45px;
   text-align: center;
@@ -74,7 +74,7 @@
   border-color: #fff;
 }
 
-.btn-login:hover {
+.btn-gra:hover {
   background-position: right center;
   /* change the direction of the change here */
   color: #fff;
@@ -112,7 +112,7 @@
 }
 
 /* Khi focus hoặc có nội dung, label di chuyển lên */
-.inputGroup :is(input:focus, input:valid) ~ label {
+.inputGroup :is(input:focus, input:valid)~label {
   transform: translateY(-50%) scale(0.9);
   margin-left: 1.3em;
   padding: 0.4em;
@@ -124,3 +124,54 @@
 .inputGroup :is(input:focus, input:valid) {
   border-color: rgb(150, 150, 200);
 }
+
+
+/* Ẩn placeholder mặc định của date input (dd/mm/yyyy) */
+.inputGroup input[type="date"]::-webkit-datetime-edit-text,
+.inputGroup input[type="date"]::-webkit-datetime-edit-month-field,
+.inputGroup input[type="date"]::-webkit-datetime-edit-day-field,
+.inputGroup input[type="date"]::-webkit-datetime-edit-year-field {
+  color: transparent;
+  /* Ẩn chữ dd/mm/yyyy */
+}
+
+/* Khi user focus hoặc có giá trị -> hiển thị lại */
+.inputGroup input[type="date"]:focus::-webkit-datetime-edit-text,
+.inputGroup input[type="date"]:focus::-webkit-datetime-edit-month-field,
+.inputGroup input[type="date"]:focus::-webkit-datetime-edit-day-field,
+.inputGroup input[type="date"]:focus::-webkit-datetime-edit-year-field,
+.inputGroup input[type="date"]:valid::-webkit-datetime-edit-text,
+.inputGroup input[type="date"]:valid::-webkit-datetime-edit-month-field,
+.inputGroup input[type="date"]:valid::-webkit-datetime-edit-day-field,
+.inputGroup input[type="date"]:valid::-webkit-datetime-edit-year-field {
+  color: #000;
+  /* Khi focus hoặc có giá trị thì hiện lại */
+}
+
+
+
+.btn-grad-active {
+  background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 51%, #1FA2FF 100%)
+}
+
+.btn-grad-active {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad-active:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+

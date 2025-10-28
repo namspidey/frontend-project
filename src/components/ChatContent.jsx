@@ -104,101 +104,99 @@ export default function ChatContent({ selectedUser, currentUser, onMessageUpdate
       </div>
 
       {/* Chat body */}
-<div
-  className="flex-grow-1 overflow-auto p-3"
-  style={{
-    background: "#f9f9f9",
-    height: "calc(100vh - 140px)",
-    overflowY: "auto",
-    paddingBottom: window.innerWidth < 768 ? "100px" : "20px", // ✅ chừa chỗ cho bottom nav mobile
-  }}
->
-  {messages.map((msg, index) => {
-    const fromMe =
-      msg.sender?._id === currentUser._id || msg.sender === currentUser._id;
-    return (
       <div
-        key={index}
-        className={`d-flex mb-2 ${
-          fromMe ? "justify-content-end" : "justify-content-start"
-        }`}
+        className="flex-grow-1 overflow-auto p-3"
+        style={{
+          background: "#f9f9f9",
+          height: "calc(100vh - 140px)",
+          overflowY: "auto",
+          paddingBottom: window.innerWidth < 768 ? "100px" : "20px", // ✅ chừa chỗ cho bottom nav mobile
+        }}
       >
-        <div
-          className={`px-3 py-2 rounded-3 ${
-            fromMe ? "bg-primary text-white" : "bg-white border"
-          }`}
-          style={{ maxWidth: "60%" }}
-        >
-          {msg.image ? (
-            <img
-              src={msg.image}
-              alt="img"
-              style={{ maxWidth: "100%", borderRadius: "10px" }}
-            />
-          ) : (
-            msg.content
-          )}
-        </div>
+        {messages.map((msg, index) => {
+          const fromMe =
+            msg.sender?._id === currentUser._id || msg.sender === currentUser._id;
+          return (
+            <div
+              key={index}
+              className={`d-flex mb-2 ${fromMe ? "justify-content-end" : "justify-content-start"
+                }`}
+            >
+              <div
+                className={`px-3 py-2 rounded-3 ${fromMe ? "bg-primary text-white" : "bg-white border"
+                  }`}
+                style={{ maxWidth: "60%" }}
+              >
+                {msg.image ? (
+                  <img
+                    src={msg.image}
+                    alt="img"
+                    style={{ maxWidth: "100%", borderRadius: "10px" }}
+                  />
+                ) : (
+                  msg.content
+                )}
+              </div>
+            </div>
+          );
+        })}
+        <div ref={messagesEndRef}></div>
       </div>
-    );
-  })}
-  <div ref={messagesEndRef}></div>
-</div>
-{image && (
-  <div className="p-2 border-top bg-white text-center">
-    <img
-      src={URL.createObjectURL(image)}
-      alt="preview"
-      style={{
-        maxWidth: "150px",
-        maxHeight: "150px",
-        borderRadius: "10px",
-        objectFit: "cover",
-      }}
-    />
-    <button
-      type="button"
-      className="btn btn-sm btn-link text-danger d-block mt-1"
-      onClick={() => setImage(null)}
-    >
-      Xóa ảnh
-    </button>
-  </div>
-)}
+      {image && (
+        <div className="p-2 border-top bg-white text-center">
+          <img
+            src={URL.createObjectURL(image)}
+            alt="preview"
+            style={{
+              maxWidth: "150px",
+              maxHeight: "150px",
+              borderRadius: "10px",
+              objectFit: "cover",
+            }}
+          />
+          <button
+            type="button"
+            className="btn btn-sm btn-link text-danger d-block mt-1"
+            onClick={() => setImage(null)}
+          >
+            Xóa ảnh
+          </button>
+        </div>
+      )}
       {/* Input bar */}
       <form
-  onSubmit={handleSend}
-  className="chat-input-bar d-flex align-items-center border-top bg-white p-3 flex-shrink-0"
-  style={{
-    position: "sticky",
-    bottom: 0,
-    zIndex: 1050,
-  }}
->
-  <label
-    className="btn btn-light me-2 mb-0 d-flex align-items-center justify-content-center"
-    style={{ borderRadius: "12px", width: "40px", height: "40px" }}
-  >
-    <IoMdPhotos size={22} />
-    <input
-      type="file"
-      accept="image/*"
-      hidden
-      onChange={(e) => setImage(e.target.files[0])}
-    />
-  </label>
+        onSubmit={handleSend}
+        className="chat-input-bar d-flex align-items-center border-top bg-white p-3 flex-shrink-0"
+        style={{
+          position: "sticky",
+          bottom: 0,
+          zIndex: 1050,
+        }}
+      >
+        <label
+          className="btn btn-light me-2 mb-0 d-flex align-items-center justify-content-center"
+          style={{ borderRadius: "12px", width: "40px", height: "40px" }}
+        >
+          <IoMdPhotos size={22} />
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+        </label>
 
-  <input
-    type="text"
-    className="form-control rounded-pill me-2"
-    placeholder="Nhập tin nhắn..."
-    value={newMsg}
-    onChange={(e) => setNewMsg(e.target.value)}
-  />
-  <button type="submit" className="btn btn-primary rounded-circle">
-    <IoSend size={20} />
-  </button>
-</form>
+        <input
+          type="text"
+          className="form-control rounded-pill me-2"
+          placeholder="Nhập tin nhắn..."
+          value={newMsg}
+          onChange={(e) => setNewMsg(e.target.value)}
+        />
+        <button type="submit" className="btn btn-primary rounded-circle">
+          <IoSend size={20} />
+        </button>
+      </form>
 
     </div>
   );

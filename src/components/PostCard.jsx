@@ -37,7 +37,11 @@ export default function PostCard({ post, user }) {
   };
 
   return (
-    <div className="card mb-4 shadow-sm rounded-4 overflow-hidden border-0">
+    <div className="card mb-4 shadow-sm  overflow-hidden "
+      style={{
+        borderRadius: "8px",
+        border: "1px solid #ccc"
+      }}>
       <div className="card-body p-0">
         {/* Header */}
         <div className="p-3 border-bottom bg-white">
@@ -84,9 +88,8 @@ export default function PostCard({ post, user }) {
             <div className="d-flex align-items-center gap-2">
               <button
                 onClick={handleLikeToggle}
-                className={`btn btn-link p-0 border-0 fs-4 ${
-                  liked ? "text-danger" : "text-secondary"
-                }`}
+                className={`btn btn-link p-0 border-0 fs-4 ${liked ? "text-danger" : "text-secondary"
+                  }`}
               >
                 {liked ? <FaHeart /> : <FaRegHeart />}
               </button>
