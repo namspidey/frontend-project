@@ -7,6 +7,7 @@ export default function VerifyOtp() {
   const [message, setMessage] = useState('');
   const [form, setForm] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(300); // ⏳ 5 phút (300 giây)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,18 +16,37 @@ export default function VerifyOtp() {
     else navigate('/register');
   }, [navigate]);
 
+  // 🕒 Đếm ngược thời gian OTP
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
   const handleSubmit = async () => {
     if (!form) return;
+    if (timeLeft <= 0) {
+      setMessage('Mã OTP đã hết hạn, vui lòng quay lại đăng ký.');
+      return;
+    }
+
     try {
       setLoading(true);
       await registerUser({ ...form, otp });
       localStorage.removeItem('registerInfo');
-      setMessage('✅ Đăng ký thành công. Vui lòng đăng nhập lại');
-      
-      // ⏳ Chờ 5 giây rồi chuyển sang login
+      setMessage('Đăng ký thành công. Vui lòng đăng nhập lại');
       setTimeout(() => navigate('/login'), 5000);
     } catch (err) {
-      // Ẩn chi tiết lỗi, hiển thị thông báo chung
       setMessage('Đã xảy ra lỗi. Vui lòng thử lại sau');
       console.error('Lỗi xác minh OTP:', err);
     } finally {
@@ -41,8 +61,22 @@ export default function VerifyOtp() {
 
         <p className="text-muted small mb-4 text-center">
           Hệ thống đã gửi mã OTP về email của bạn. 
-          Vui lòng nhập mã OTP đã gửi để hoàn thành đăng ký.
+          Vui lòng nhập mã OTP để hoàn tất đăng ký.
         </p>
+
+        {/* Hiển thị đếm ngược hoặc hết hạn */}
+        {timeLeft > 0 ? (
+          <p className="text-primary text-center small mb-2">
+            Mã OTP sẽ hết hạn sau: <b>{formatTime(timeLeft)}</b>
+          </p>
+        ) : (
+          <p className="text-danger text-center small mb-2">
+            Mã OTP đã hết hạn.{' '}
+            <a href="/register" className="text-primary text-decoration-underline">
+              Quay lại đăng ký
+            </a>
+          </p>
+        )}
 
         <input
           type="text"
@@ -50,12 +84,13 @@ export default function VerifyOtp() {
           placeholder="Nhập mã OTP"
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
+          disabled={timeLeft <= 0}
         />
 
         <button
           className="btn-gra w-100"
           onClick={handleSubmit}
-          disabled={loading}
+          disabled={loading || timeLeft <= 0}
         >
           {loading ? 'Đang xác minh...' : 'Xác minh & Đăng ký'}
         </button>

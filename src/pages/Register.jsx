@@ -12,6 +12,7 @@ export default function Register() {
   });
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showNote, setShowNote] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -92,6 +93,20 @@ export default function Register() {
             Quay lại đăng nhập
           </a>
         </p>
+      </div>
+      {/* Lưu ý (ẩn/hiện khi click) */}
+      <div className="mt-3 text-center">
+        <p
+          style={{ cursor: 'pointer', color: '#0d00ffff', textDecoration: 'underline' }}
+          onClick={() => setShowNote(!showNote)}
+        >
+          Lưu ý
+        </p>
+        {showNote && (
+          <p className="small text-muted mt-2">
+            Nếu phản hồi chậm, vui lòng đợi 30-60s để server khởi động
+          </p>
+        )}
       </div>
     </div>
   );
