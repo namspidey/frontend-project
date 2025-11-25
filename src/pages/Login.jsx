@@ -54,13 +54,13 @@ export default function Login() {
 
         {error && <p className="text-danger small">{error}</p>}
 
-        {/* nút login */}
+        
         <button
           className="w-100 btn-gra"
           onClick={handleLogin}
-          disabled={loading}   // <-- disable khi loading
+          disabled={loading}   
         >
-          {loading ? 'Loading...' : 'Đăng nhập'}   {/* đổi text */}
+          {loading ? 'Loading...' : 'Đăng nhập'}   
         </button>
 
         <p className="mt-3 text-center small">
@@ -69,7 +69,7 @@ export default function Login() {
         </p>
       </div>
 
-      {/* Lưu ý */}
+      
       <div className="mt-3 text-center">
         <p className='text-primary'
           style={{ cursor: 'pointer', textDecoration: 'underline' }}
