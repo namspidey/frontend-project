@@ -7,15 +7,21 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showNote, setShowNote] = useState(false);
+  const [loading, setLoading] = useState(false);  // <-- thêm
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    setLoading(true);      // <-- bật loading
+    setError('');
+
     try {
       const data = await loginUser(username, password);
       localStorage.setItem('token', data.token);
       navigate('/home');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);   // <-- tắt loading dù thành công hay lỗi
     }
   };
 
@@ -48,20 +54,22 @@ export default function Login() {
 
         {error && <p className="text-danger small">{error}</p>}
 
-        <button className="w-100 btn-gra" onClick={handleLogin}>
-          Đăng nhập
+        {/* nút login */}
+        <button
+          className="w-100 btn-gra"
+          onClick={handleLogin}
+          disabled={loading}   // <-- disable khi loading
+        >
+          {loading ? 'Loading...' : 'Đăng nhập'}   {/* đổi text */}
         </button>
-
-
 
         <p className="mt-3 text-center small">
           Chưa có tài khoản?{' '}
-          <a href="/register" className="text-decoration-none">
-            Đăng ký ngay
-          </a>
+          <a href="/register" className="text-decoration-none">Đăng ký ngay</a>
         </p>
       </div>
-      {/* Lưu ý (ẩn/hiện khi click) */}
+
+      {/* Lưu ý */}
       <div className="mt-3 text-center">
         <p className='text-primary'
           style={{ cursor: 'pointer', textDecoration: 'underline' }}
