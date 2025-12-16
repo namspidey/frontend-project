@@ -26,63 +26,76 @@ export default function Login() {
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: '400px' }}>
-      <div className="card p-4 shadow-sm">
-        <h3 className="mb-4 text-center">Đăng nhập</h3>
+    <>
 
-        <div className="mb-3 inputGroup">
-          <input
-            type="text"
-            required
-            autoComplete="off"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <label>Tên đăng nhập</label>
-        </div>
+      <div className="container mt-5" style={{ maxWidth: '400px' }}>
+        <div className="card p-4 shadow-sm">
+          <h3 className="mb-4 text-center">Đăng nhập</h3>
 
-        <div className="mb-3 inputGroup">
-          <input
-            type="password"
-            required
-            autoComplete="off"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <label>Mật khẩu</label>
-        </div>
+          <div className="mb-3 inputGroup">
+            <input
+              type="text"
+              required
+              autoComplete="off"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <label>Tên đăng nhập</label>
+          </div>
 
-        {error && <p className="text-danger small">{error}</p>}
+          <div className="mb-3 inputGroup">
+            <input
+              type="password"
+              required
+              autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <label>Mật khẩu</label>
+          </div>
 
-        
-        <button
-          className="w-100 btn-gra"
-          onClick={handleLogin}
-          disabled={loading}   
-        >
-          {loading ? 'Loading...' : 'Đăng nhập'}   
-        </button>
+          {error && <p className="text-danger small">{error}</p>}
 
-        <p className="mt-3 text-center small">
-          Chưa có tài khoản?{' '}
-          <a href="/register" className="text-decoration-none">Đăng ký ngay</a>
-        </p>
-      </div>
 
-      
-      <div className="mt-3 text-center">
-        <p className='text-primary'
-          style={{ cursor: 'pointer', textDecoration: 'underline' }}
-          onClick={() => setShowNote(!showNote)}
-        >
-          Lưu ý
-        </p>
-        {showNote && (
-          <p className="small text-muted mt-2">
-            Nếu phản hồi chậm, vui lòng đợi 30-60s để server khởi động
+          <button
+            className="w-100 btn-gra"
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'Đăng nhập'}
+          </button>
+
+          <p className="mt-3 text-center small">
+            Chưa có tài khoản?{' '}
+            <a href="/register" className="text-decoration-none">Đăng ký ngay</a>
           </p>
-        )}
+        </div>
+
+
+        <div className="mt-3 text-center">
+          <p className='text-primary'
+            style={{ cursor: 'pointer', textDecoration: 'underline' }}
+            onClick={() => setShowNote(!showNote)}
+          >
+            Lưu ý
+          </p>
+          <a
+            href="https://docs.google.com/document/d/12-x78xCc92qnRjYwhHgoH0tIOos-dulIFsJtFn25HFM/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className=" btn-gra text-decoration-none d-inline-block"
+          >
+            Hướng dẫn sử dụng
+          </a>
+          {showNote && (
+            <p className="small text-muted mt-2">
+              Nếu phản hồi chậm, vui lòng đợi 30-60s để server khởi động
+            </p>
+
+          )}
+
+        </div>
       </div>
-    </div>
+    </>
   );
 }
