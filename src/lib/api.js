@@ -1,4 +1,6 @@
-const BASE_URL = 'https://backend-project-xqjf.onrender.com/api';
+//const BASE_URL = 'https://backend-project-xqjf.onrender.com/api';
+const BASE_URL = 'http://localhost:5000/api';
+
 
 // 🔧 Hàm tiện ích lấy header có token (nếu có)
 function getAuthHeaders() {

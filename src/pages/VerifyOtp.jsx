@@ -44,7 +44,7 @@ export default function VerifyOtp() {
       setLoading(true);
       await registerUser({ ...form, otp });
       localStorage.removeItem('registerInfo');
-      setMessage('Đăng ký thành công. Vui lòng đăng nhập lại');
+      setMessage('Đăng ký thành công. Đang chuyển hướng về trang đăng nhập...');
       setTimeout(() => navigate('/login'), 5000);
     } catch (err) {
       setMessage('Đã xảy ra lỗi. Vui lòng thử lại sau');
