@@ -12,15 +12,7 @@ export default function Chat({ currentUser }) {
   const [chatList, setChatList] = useState([]);
   const [refreshFlag, setRefreshFlag] = useState(false);
 
-  // Load danh sách chat
-  const reloadChatList = async () => {
-    try {
-      const data = await getChatList();
-      setChatList(data);
-    } catch (err) {
-      console.error("Lỗi khi reload danh sách chat:", err);
-    }
-  };
+
 
   useEffect(() => {
     const fetchChats = async () => {

@@ -14,7 +14,7 @@ export default function UserInfo({ profilePic, username, size = 40 }) {
       onClick={handleClick}>
       <img
         src={profilePic || "/default-avatar.jpg"}
-        
+        alt="user avatar"
         className="rounded-circle me-2"
         style={{
           width: `${size}px`,
